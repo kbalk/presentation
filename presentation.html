@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta description="Presentation">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" 
+          href="http://yandex.st/highlightjs/8.0/styles/default.min.css">
+    </link>
+    <link rel="stylesheet" href="css/styles.css">
+
+    <script src=
+        "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js">
+    </script>
+    <script>window.jQuery || document.write(
+           '<script src="lib/jquery-1.11.1.min.js"><\/script>')
+    </script>
+    <script src="lib/bootstrap.min.js"></script>
+    <script src="http://yandex.st/highlightjs/8.0/highlight.min.js">
+    </script>
+    <script src="lib/marked.min.js"></script>
+    <script src="js/pfModel.js"></script>
+    <script src="js/pfView.js"></script>
+    <script src="js/presentation.js"></script>
+
+    <title>Presentation</title>
+</head>
+
+<body>
+    <div id="slide-show" class="carousel slide" data-interval="false">
+
+        <!-- Handle the where JavaScript is disabled; hidden otherwise. -->
+        <div id="noJS" class="jumbotron">
+            <p class="text-center">Please enable JavaScript ...</p>
+        </div>
+
+        <!-- Start Button for form modal; hidden when form is accepted. -->
+        <div class="container" id="start-show">
+            <button class="btn btn-primary btn-lg" data-toggle="modal" 
+                data-target="#form-modal">
+                Start Slideshow
+            </button>
+        </div>
+
+        <!-- Form Modal for requesting name of markdown file.  Hidden   -->
+        <!-- when the form is successfully submitted.                   -->
+        <div class="modal fade" id="form-modal" tabindex="-1" 
+             role="dialog" aria-labelledby="form-label" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <button type="button" class="close" 
+                                data-dismiss="modal" id="form-close-btn"
+                                aria-hidden="true">&times;
+                        </button>
+                        <h3 class="modal-title" id="form-label">
+                            Select a slideshow
+                        </h3>
+                    </div>  <!-- class="modal-header" -->
+
+                    <div class="modal-body">
+                        <form role="form">
+                            <div class="form-group">
+                                <label for="presentation-title">
+                                       Slideshow Title
+                                </label>
+                                <input type="text" class="form-control" 
+                                    id="presentation-title" 
+                                    placeholder="Presentation" >
+                                </input>
+                            </div>  <!-- class="form-group" for title -->
+                            <div class="form-group">
+                                <label for="markdown-file">
+                                       Markdown File
+                                </label>
+                                <input type="text" class="form-control"
+                                       id="markdown-file" 
+                                       placeholder="slides/example.md">
+                                </input>
+                                <p class="help-block">The markdown file must 
+                                   be located on the same server and within 
+                                   the same directory or subdirectory as 
+                                   this html file.
+                                </p>
+                            </div>  <!-- class="form-group" for file -->
+                        </form>
+                    </div>  <!-- class="modal-body" -->
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" 
+                                id="submit-btn">
+                                Submit
+                        </button>
+                    </div>  <!-- class="modal-footer" -->
+
+                </div>  <!-- class="modal-content" -->
+            </div>  <!-- class="modal-dialog" -->
+        </div>  <!-- class="modal fade" -->
+
+        <!-- Modal for alerts.  Hidden unless there's an error.     -->
+        <div class="modal fade" id="alert-modal" tabindex="-2" 
+             role="dialog" aria-labelledby="alert-label" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" id="alert-header">
+                        <h4 class="modal-title" id="alert-label">Error</h4>
+                    </div>
+                    <div class="modal-body" id="alert-body"></div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" 
+                                data-dismiss="modal" id="alert-close-btn" 
+                                aria-hidden="true">
+                                OK
+                        </button>
+                    </div>
+                </div>  <!-- class="modal-content" -->
+            </div>  <!-- class="modal-dialog" -->
+        </div>  <!-- class="modal fade" -->
+
+        <!-- Carousel for slides -->
+        <div class="carousel-inner">
+        </div>
+
+        <!-- Carousel control buttons located on bottom of screen -->
+        <div class="carousel-buttons">
+            <div class="col-xs-3 col-xs-offset-1 dropup">
+                <button type="button"
+                        class="btn btn-default dropdown-toggle" 
+                        data-toggle="dropdown">Select slide
+                    <span class="caret caret-reversed"></span>
+                </button>
+                <ul class="dropdown-menu dropup-scroll" id="slide-list"
+                    role="menu" 
+                    aria-labelledby="dLabel">
+                </ul>
+            </div>
+            <div class="col-xs-1 col-xs-offset-1" style="text-align:center">
+                <button type="button" class="btn btn-default prev-slide"
+                        id="prev-slide-btn">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                </button>
+            </div>
+            <div class="col-xs-1" style="text-align:center">
+                <button type="button" class="btn btn-default next-slide"
+                        id="next-slide-btn">
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                </button>
+            </div>
+            <div class="col-xs-2 col-xs-offset-3">
+                <p id="slide-count">1 / 1</p>
+            </div>
+        </div>  <!-- class="carousel-buttons" -->
+
+    </div>
+</body>
+
+</html>
