@@ -12,11 +12,12 @@ $(document).ready(initPage);
  * initPage
  *
  * Once the document is ready, this function provides the callbacks
- * for the start button and form modal.  When a user provides a 
- * non-blank markdown filename, we call startSlideshow() to begin 
- * initializing the slideshow.
+ * for the start button, form modal and alert modal.  When a user 
+ * provides a non-blank markdown filename, we call startSlideshow() 
+ * to begin initializing the slideshow.
  *
  * The possible logic flows are as follows:
+ *
  *    click StartButton -> Form Modal -> type non-blank filename 
  *          -> click Submit -> get file -> get fails
  *          -> Alert Modal -> click OK -> Form Modal (repeat)
@@ -33,13 +34,18 @@ function initPage()
     // warning to notify the user that JavaScript is disabled.
     $('#noJS').hide();
 
-    // Make sure the user can only exit the modal using the buttons
+    // Make sure the user can only exit the modals using the buttons
     // within the modal and not by clicking elsewhere on the screen.
-    // 
+    $('#form-modal').modal( { backdrop: false, keyboard: false } );
+    $('#alert-modal').modal( { backdrop: false, keyboard: false } );
+
     // The form modal is activated by the "Start slideshow" button,
     // so hide it until then.
-    $('#form-modal').modal( { backdrop: false, keyboard: false } );
     $('#form-modal').modal('hide');
+
+    // The alert modal is activated when alertDialog() is called,
+    // so hide the alert until then.
+    $('#alert-modal').modal('hide');
 
     // If the "Start slideshow" button is clicked, check the form for 
     // a non-blank filename.  If we have a non-blank filename, we can
@@ -61,6 +67,11 @@ function initPage()
     $('#form-close-btn').on('click', function () { 
         $('#start-show').show();
     });
+
+    // If the alert modal is closed, go back to the form modal.
+    $('#alert-close-btn').on('click', function () { 
+        $('#form-modal').modal('show');
+    });
 }
 
 /* ------------------------------------------------------------------
@@ -76,15 +87,6 @@ function alertDialog(errorMsg)
     // Insert the error message and show the alert.
     errorMsg = errorMsg.replace(/(\n)+/g, '<br />');
     $('#alert-body').html(errorMsg);
-
-    // Make sure the user can only exit the modal using the buttons
-    // within the modal and not by clicking elsewhere on the screen.
-    $('#alert-modal').modal( { backdrop: false, keyboard: false } );
-
-    // If the alert modal is closed, go back to the form modal.
-    $('#alert-close-btn').on('click', function () { 
-        $('#form-modal').modal('show');
-    });
 
     $('#alert-modal').modal('show');
 }
